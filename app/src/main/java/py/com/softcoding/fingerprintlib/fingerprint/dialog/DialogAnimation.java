@@ -3,7 +3,7 @@ package py.com.softcoding.fingerprintlib.fingerprint.dialog;
 import py.com.softcoding.fingerprintlib.R;
 
 /**
- * Created by alfre on 03/06/18.
+ * Created by Alfredo Cano on 03/06/18.
  */
 
 public class DialogAnimation {
@@ -23,10 +23,10 @@ public class DialogAnimation {
         DISAPPEAR
     }
 
-    public static int getStyle(Enter enterAnimation, Exit exitAnimation){
-        switch (enterAnimation){
+    public static int getStyle(Enter enterAnimation, Exit exitAnimation) {
+        switch (enterAnimation) {
             case BOTTOM:
-                switch (exitAnimation){
+                switch (exitAnimation) {
                     case BOTTOM:
                         return R.style.BottomBottomAnimation;
                     case TOP:
@@ -36,7 +36,7 @@ public class DialogAnimation {
                 }
                 break;
             case TOP:
-                switch (exitAnimation){
+                switch (exitAnimation) {
                     case BOTTOM:
                         return R.style.TopBottomAnimation;
                     case TOP:
@@ -46,7 +46,7 @@ public class DialogAnimation {
                 }
                 break;
             case LEFT:
-                switch (exitAnimation){
+                switch (exitAnimation) {
                     case LEFT:
                         return R.style.LeftLeftAnimation;
                     case RIGHT:
@@ -56,7 +56,7 @@ public class DialogAnimation {
                 }
                 break;
             case RIGHT:
-                switch (exitAnimation){
+                switch (exitAnimation) {
                     case LEFT:
                         return R.style.RightLeftAnimation;
                     case RIGHT:
@@ -66,7 +66,7 @@ public class DialogAnimation {
                 }
                 break;
             case APPEAR:
-                switch (exitAnimation){
+                switch (exitAnimation) {
                     case BOTTOM:
                         return R.style.ExitToBottomAnimation;
                     case TOP:

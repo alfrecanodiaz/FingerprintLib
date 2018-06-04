@@ -1,7 +1,7 @@
 package py.com.softcoding.fingerprintlib.fingerprint.utils;
 
 /**
- * Created by alfre on 03/06/18.
+ * Created by Alfredo Cano on 03/06/18.
  */
 
 public class FingerprintToken {
@@ -11,8 +11,8 @@ public class FingerprintToken {
         this.cipherHelper = cipherHelper;
     }
 
-    public void validate(){
-        if(cipherHelper !=null) {
+    public void validate() {
+        if (cipherHelper != null) {
             cipherHelper.generateNewKey();
         }
     }

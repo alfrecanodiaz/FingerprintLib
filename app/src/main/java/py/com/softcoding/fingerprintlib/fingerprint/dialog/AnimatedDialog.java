@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 /**
- * Created by alfre on 03/06/18.
+ * Created by Alfredo Cano on 03/06/18.
  */
 
 @SuppressWarnings("unchecked")
@@ -27,7 +27,7 @@ public class AnimatedDialog<T extends AnimatedDialog> {
     AlertDialog dialog;
     View dialogView;
 
-    public AnimatedDialog(Context context){
+    public AnimatedDialog(Context context) {
         this.context = context;
         this.title = "";
         this.message = "";
@@ -40,22 +40,22 @@ public class AnimatedDialog<T extends AnimatedDialog> {
         this.builder = new AlertDialog.Builder(context);
     }
 
-    public T title(String title){
+    public T title(String title) {
         this.title = title;
         return (T) this;
     }
 
-    public T message(String message){
+    public T message(String message) {
         this.message = message;
         return (T) this;
     }
 
-    public T title(int resTitle){
+    public T title(int resTitle) {
         this.title = context.getResources().getString(resTitle);
         return (T) this;
     }
 
-    public T message(int resMessage){
+    public T message(int resMessage) {
         this.message = context.getResources().getString(resMessage);
         return (T) this;
     }
@@ -65,22 +65,22 @@ public class AnimatedDialog<T extends AnimatedDialog> {
         return (T) this;
     }
 
-    public T cancelOnPressBack(boolean cancelOnPressBack){
+    public T cancelOnPressBack(boolean cancelOnPressBack) {
         this.cancelOnPressBack = cancelOnPressBack;
         return (T) this;
     }
 
-    public T dimBackground(boolean dimBackground){
+    public T dimBackground(boolean dimBackground) {
         this.dimBackground = dimBackground;
         return (T) this;
     }
 
-    public T enterAnimation(DialogAnimation.Enter enterAnimation){
+    public T enterAnimation(DialogAnimation.Enter enterAnimation) {
         this.enterAnimation = enterAnimation;
         return (T) this;
     }
 
-    public T exitAnimation(DialogAnimation.Exit exitAnimation){
+    public T exitAnimation(DialogAnimation.Exit exitAnimation) {
         this.exitAnimation = exitAnimation;
         return (T) this;
     }

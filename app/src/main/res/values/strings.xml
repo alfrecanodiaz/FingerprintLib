@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Fingerprint</string>
-    <string name="fingerprint_state_scanning">Touch sensor</string>
-    <string name="fingerprint_state_success">Fingerprint recognized</string>
-    <string name="fingerprint_state_failure">Fingerprint not recognized.\nTry again.</string>
-    <string name="fingerprint_cancel">Cancel</string>
-    <string name="fingerprint_use_password">Use Password</string>
-    <string name="fingerprint_icon_description">Fingerprint icon</string>
+    <string name="fingerprint_state_scanning">Sensor Touch</string>
+    <string name="fingerprint_state_success">Huella dactilar reconocida</string>
+    <string name="fingerprint_state_failure">Huella dactilar no reconocida.\nInténtalo de nuevo.</string>
+    <string name="fingerprint_cancel">Cancelar</string>
+    <string name="fingerprint_use_password">Use su PIN</string>
+    <string name="fingerprint_icon_description">Huella dactilar</string>
 
-    <string name="password_confirm">Confirm</string>
-    <string name="password_cancel">Cancel</string>
-    <string name="password_incorrect">Incorrect Password</string>
+    <string name="password_confirm">Confirmar</string>
+    <string name="password_cancel">Cancelar</string>
+    <string name="password_incorrect">PIN incorrecto</string>
 </resources>

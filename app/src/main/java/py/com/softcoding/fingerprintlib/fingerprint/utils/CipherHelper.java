@@ -20,7 +20,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 
 /**
- * Created by alfre on 03/06/18.
+ * Created by Alfredo Cano on 03/06/18.
  */
 
 public class CipherHelper {
@@ -36,7 +36,7 @@ public class CipherHelper {
     private final String keyName;
     private final String provider = "AndroidKeyStore";
 
-    public CipherHelper(String keyName){
+    public CipherHelper(String keyName) {
         this.keyName = keyName;
         this.keyStoreLoaded = false;
         this.cipherKeyGenCreated = false;
@@ -44,7 +44,7 @@ public class CipherHelper {
     }
 
     private void loadKeyStore(){
-        if(keyStoreLoaded){
+        if (keyStoreLoaded) {
             return;
         }
 
@@ -61,7 +61,7 @@ public class CipherHelper {
         }
     }
 
-    private boolean hasKey(){
+    private boolean hasKey() {
         try {
             cipherKey = (SecretKey) keyStore.getKey(keyName, null);
         } catch (KeyStoreException | NoSuchAlgorithmException | UnrecoverableKeyException e) {
@@ -70,8 +70,8 @@ public class CipherHelper {
         return cipherKey != null;
     }
 
-    private void createCipherKeyGenerator(){
-        if(cipherKeyGenCreated){
+    private void createCipherKeyGenerator() {
+        if (cipherKeyGenCreated) {
             return;
         }
         try {
@@ -89,7 +89,7 @@ public class CipherHelper {
     }
 
     private void createCipher(){
-        if(cipherCreated){
+        if (cipherCreated) {
             return;
         }
 
@@ -116,7 +116,7 @@ public class CipherHelper {
         }
     }
 
-    private boolean initDecryptionCipher(byte[] ivBytes){
+    private boolean initDecryptionCipher(byte[] ivBytes) {
         try {
             cipher.init(Cipher.DECRYPT_MODE, cipherKey, new IvParameterSpec(ivBytes));
             return true;
@@ -127,13 +127,13 @@ public class CipherHelper {
         }
     }
 
-    public void generateNewKey(){
+    public void generateNewKey() {
         createCipherKeyGenerator();
         cipherKey = cipherKeyGenerator.generateKey();
         reloadKeyStore();
     }
 
-    public FingerprintManager.CryptoObject getEncryptionCryptoObject(){
+    public FingerprintManager.CryptoObject getEncryptionCryptoObject() {
         loadKeyStore();
         if(!hasKey()){
             generateNewKey();
@@ -147,7 +147,7 @@ public class CipherHelper {
         }
     }
 
-    public FingerprintManager.CryptoObject getDecryptionCryptoObject(byte[] ivBytes){
+    public FingerprintManager.CryptoObject getDecryptionCryptoObject(byte[] ivBytes) {
         loadKeyStore();
         if(!hasKey()){
             generateNewKey();

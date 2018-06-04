@@ -25,7 +25,7 @@ import py.com.softcoding.fingerprintlib.fingerprint.utils.CipherHelper;
 import py.com.softcoding.fingerprintlib.fingerprint.utils.FingerprintToken;
 
 /**
- * Created by alfre on 03/06/18.
+ * Created by Alfredo Cano on 03/06/18.
  */
 
 public class Fingerprint extends RelativeLayout {
@@ -78,7 +78,7 @@ public class Fingerprint extends RelativeLayout {
     }
 
     @SuppressLint("ResourceType")
-    private void initAttributes(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes){
+    private void initAttributes(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Fingerprint, defStyleAttr, defStyleRes);
         try {
             fingerprintScanning = a.getResourceId(R.styleable.Fingerprint_fingerprintScanningColor, R.color.fingerprint_scanning);
@@ -97,7 +97,7 @@ public class Fingerprint extends RelativeLayout {
         try {
             int width = ta.getLayoutDimension(0, ViewGroup.LayoutParams.WRAP_CONTENT);
             int height = ta.getLayoutDimension(1, ViewGroup.LayoutParams.WRAP_CONTENT);
-            if(width==-2 || height==-2) {
+            if (width == -2 || height == -2) {
                 size = dipToPixels(DEFAULT_CIRCLE_SIZE);
             } else{
                 size = width;
@@ -107,7 +107,7 @@ public class Fingerprint extends RelativeLayout {
         }
     }
 
-    private void initView(Context context){
+    private void initView(Context context) {
         this.fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
         this.cipherHelper = null;
         this.handler = new Handler();
@@ -143,7 +143,7 @@ public class Fingerprint extends RelativeLayout {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 
-    private void setStatus(int drawableId, int drawableColorId, int circleColorId){
+    private void setStatus(int drawableId, int drawableColorId, int circleColorId) {
         Context context = getContext();
         fingerprintImageView.setBackgroundResource(drawableId);
         fingerprintImageView.setBackgroundTintList(ColorStateList.valueOf(context.getColor(drawableColorId)));
@@ -162,7 +162,7 @@ public class Fingerprint extends RelativeLayout {
      * @param fingerprintCallback callback
      * @return the Fingerprint object itself
      */
-    public Fingerprint callback(FingerprintCallback fingerprintCallback){
+    public Fingerprint callback(FingerprintCallback fingerprintCallback) {
         this.fingerprintCallback = fingerprintCallback;
         return this;
     }
@@ -173,7 +173,7 @@ public class Fingerprint extends RelativeLayout {
      * @param KEY_NAME key that will be used for the cipher
      * @return the Fingerprint object itself
      */
-    public Fingerprint callback(FingerprintSecureCallback fingerprintSecureCallback, String KEY_NAME){
+    public Fingerprint callback(FingerprintSecureCallback fingerprintSecureCallback, String KEY_NAME) {
         this.fingerprintSecureCallback = fingerprintSecureCallback;
         this.cipherHelper = new CipherHelper(KEY_NAME);
         return this;
@@ -184,7 +184,7 @@ public class Fingerprint extends RelativeLayout {
      * @param cryptoObject CryptoObject to be unlocked
      * @return the Fingerprint object itself
      */
-    public Fingerprint cryptoObject(FingerprintManager.CryptoObject cryptoObject){
+    public Fingerprint cryptoObject(FingerprintManager.CryptoObject cryptoObject) {
         this.cryptoObject = cryptoObject;
         return this;
     }
@@ -261,7 +261,7 @@ public class Fingerprint extends RelativeLayout {
      * @param counterCallback a callback triggered when limit is reached
      * @return the Fingerprint object itself
      */
-    public Fingerprint tryLimit(int limit, FailAuthCounterCallback counterCallback){
+    public Fingerprint tryLimit(int limit, FailAuthCounterCallback counterCallback) {
         this.limit = limit;
         this.counterCallback = counterCallback;
         return this;
@@ -272,7 +272,7 @@ public class Fingerprint extends RelativeLayout {
      * @param delayAfterError the delay in milliseconds
      * @return the Fingerprint object itself
      */
-    public Fingerprint delayAfterError(int delayAfterError){
+    public Fingerprint delayAfterError(int delayAfterError) {
         this.delayAfterError = delayAfterError;
         return this;
     }
@@ -282,7 +282,7 @@ public class Fingerprint extends RelativeLayout {
      * @param context an activity context
      * @return a boolean value
      */
-    public static boolean isAvailable(Context context){
+    public static boolean isAvailable(Context context) {
         FingerprintManager fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
         if(fingerprintManager!=null){
             return (fingerprintManager.isHardwareDetected() && fingerprintManager.hasEnrolledFingerprints());
@@ -293,31 +293,30 @@ public class Fingerprint extends RelativeLayout {
     /**
      * start fingerprint scan
      */
-    public void authenticate(){
-        if(fingerprintSecureCallback!=null){
-            if(cryptoObject!=null){
+    public void authenticate() {
+        if (fingerprintSecureCallback != null) {
+            if (cryptoObject != null) {
                 throw new RuntimeException("If you specify a CryptoObject you have to use FingerprintCallback");
             }
             cryptoObject = cipherHelper.getEncryptionCryptoObject();
-            if(cryptoObject==null) {
+            if (cryptoObject == null) {
                 fingerprintSecureCallback.onNewFingerprintEnrolled(new FingerprintToken(cipherHelper));
             }
-        }
-        else if(fingerprintCallback==null){
+        } else if (fingerprintCallback == null) {
             throw new RuntimeException("You must specify a callback.");
         }
 
         cancellationSignal = new CancellationSignal();
-        if(fingerprintManager.isHardwareDetected() && fingerprintManager.hasEnrolledFingerprints()) {
+        if (fingerprintManager.isHardwareDetected() && fingerprintManager.hasEnrolledFingerprints()) {
             fingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, new FingerprintManager.AuthenticationCallback() {
                 @Override
                 public void onAuthenticationError(int errorCode, CharSequence errString) {
                     super.onAuthenticationError(errorCode, errString);
                     setStatus(R.drawable.fingerprint_error, fingerprintError, circleError);
                     handler.postDelayed(returnToScanning, delayAfterError);
-                    if(fingerprintSecureCallback!=null){
+                    if (fingerprintSecureCallback != null) {
                         fingerprintSecureCallback.onAuthenticationError(errorCode, errString.toString());
-                    } else{
+                    } else {
                         fingerprintCallback.onAuthenticationError(errorCode, errString.toString());
                     }
                 }
@@ -327,9 +326,9 @@ public class Fingerprint extends RelativeLayout {
                     super.onAuthenticationHelp(helpCode, helpString);
                     setStatus(R.drawable.fingerprint_error, fingerprintError, circleError);
                     handler.postDelayed(returnToScanning, delayAfterError);
-                    if(fingerprintSecureCallback!=null){
+                    if (fingerprintSecureCallback != null) {
                         fingerprintSecureCallback.onAuthenticationError(helpCode, helpString.toString());
-                    } else{
+                    } else {
                         fingerprintCallback.onAuthenticationError(helpCode, helpString.toString());
                     }
                 }
@@ -339,10 +338,9 @@ public class Fingerprint extends RelativeLayout {
                     super.onAuthenticationSucceeded(result);
                     handler.removeCallbacks(returnToScanning);
                     setStatus(R.drawable.fingerprint_success, fingerprintSuccess, circleSuccess);
-                    if(fingerprintSecureCallback!=null){
+                    if (fingerprintSecureCallback != null) {
                         fingerprintSecureCallback.onAuthenticationSucceeded();
-                    }
-                    else{
+                    } else {
                         fingerprintCallback.onAuthenticationSucceeded();
                     }
                     tryCounter = 0;
@@ -353,20 +351,18 @@ public class Fingerprint extends RelativeLayout {
                     super.onAuthenticationFailed();
                     setStatus(R.drawable.fingerprint_error, fingerprintError, circleError);
                     handler.postDelayed(returnToScanning, delayAfterError);
-                    if(fingerprintSecureCallback!=null){
+                    if (fingerprintSecureCallback != null) {
                         fingerprintSecureCallback.onAuthenticationFailed();
-                    }
-                    else{
+                    } else {
                         fingerprintCallback.onAuthenticationFailed();
                     }
 
-                    if(counterCallback!=null && ++tryCounter==limit){
+                    if (counterCallback != null && ++tryCounter == limit) {
                         counterCallback.onTryLimitReached();
                     }
                 }
             }, null);
-        }
-        else{
+        } else {
             Log.e(TAG, "Fingerprint scanner not detected or no fingerprint enrolled. Use FingerprintView#isAvailable(Context) before.");
         }
     }
@@ -374,7 +370,7 @@ public class Fingerprint extends RelativeLayout {
     /**
      * cancel fingerprint scan
      */
-    public void cancel(){
+    public void cancel() {
         cancellationSignal.cancel();
         returnToScanning.run();
     }

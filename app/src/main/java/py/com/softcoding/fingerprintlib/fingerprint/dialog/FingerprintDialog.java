@@ -20,7 +20,7 @@ import py.com.softcoding.fingerprintlib.fingerprint.utils.FingerprintToken;
 import py.com.softcoding.fingerprintlib.fingerprint.view.Fingerprint;
 
 /**
- * Created by alfre on 03/06/18.
+ * Created by Alfredo Cano on 03/06/18.
  */
 
 public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
@@ -39,12 +39,12 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
 
     private final static String TAG = "FingerprintDialog";
 
-    private FingerprintDialog(Context context){
+    private FingerprintDialog(Context context) {
         super(context);
         init();
     }
 
-    private void init(){
+    private void init() {
         this.handler = new Handler();
         this.onUsePassword = null;
         this.delayAfterError = Fingerprint.DEFAULT_DELAY_AFTER_ERROR;
@@ -68,7 +68,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param context A context
      * @return True is authentication is available, False otherwise
      */
-    public static boolean isAvailable(Context context){
+    public static boolean isAvailable(Context context) {
         FingerprintManager manager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
         return (manager!=null && manager.isHardwareDetected() && manager.hasEnrolledFingerprints());
     }
@@ -78,7 +78,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param context Activity Context
      * @return FingerprintDialog instance
      */
-    public static FingerprintDialog initialize(Context context){
+    public static FingerprintDialog initialize(Context context) {
         return new FingerprintDialog(context);
     }
 
@@ -87,7 +87,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param fingerprintDialogCallback The callback
      * @return FingerprintDialog object
      */
-    public FingerprintDialog callback(FingerprintDialogCallback fingerprintDialogCallback){
+    public FingerprintDialog callback(FingerprintDialogCallback fingerprintDialogCallback) {
         this.fingerprintDialogCallback = fingerprintDialogCallback;
         this.fingerprint.callback(fingerprintCallback);
         return this;
@@ -99,7 +99,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param KEY_NAME An arbitrary string used to create a cipher pair in the Android KeyStore
      * @return FingerprintDialog object
      */
-    public FingerprintDialog callback(FingerprintDialogSecureCallback fingerprintDialogSecureCallback, String KEY_NAME){
+    public FingerprintDialog callback(FingerprintDialogSecureCallback fingerprintDialogSecureCallback, String KEY_NAME) {
         this.fingerprintDialogSecureCallback = fingerprintDialogSecureCallback;
         this.fingerprint.callback(fingerprintSecureCallback, KEY_NAME);
         return this;
@@ -110,7 +110,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param cryptoObject CryptoObject to use
      * @return FingerprintDialog object
      */
-    public FingerprintDialog cryptoObject(FingerprintManager.CryptoObject cryptoObject){
+    public FingerprintDialog cryptoObject(FingerprintManager.CryptoObject cryptoObject) {
         this.fingerprint.cryptoObject(cryptoObject);
         return this;
     }
@@ -120,7 +120,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param fingerprintScanningColor resource color
      * @return FingerprintDialog object
      */
-    public FingerprintDialog fingerprintScanningColor(int fingerprintScanningColor){
+    public FingerprintDialog fingerprintScanningColor(int fingerprintScanningColor) {
         this.fingerprint.fingerprintScanningColor(fingerprintScanningColor);
         return this;
     }
@@ -130,7 +130,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param fingerprintSuccessColor resource color
      * @return FingerprintDialog object
      */
-    public FingerprintDialog fingerprintSuccessColor(int fingerprintSuccessColor){
+    public FingerprintDialog fingerprintSuccessColor(int fingerprintSuccessColor) {
         this.fingerprint.fingerprintSuccessColor(fingerprintSuccessColor);
         return this;
     }
@@ -140,7 +140,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param fingerprintErrorColor resource color
      * @return FingerprintDialog object
      */
-    public FingerprintDialog fingerprintErrorColor(int fingerprintErrorColor){
+    public FingerprintDialog fingerprintErrorColor(int fingerprintErrorColor) {
         this.fingerprint.fingerprintErrorColor(fingerprintErrorColor);
         return this;
     }
@@ -150,7 +150,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param circleScanningColor resource color
      * @return FingerprintDialog object
      */
-    public FingerprintDialog circleScanningColor(int circleScanningColor){
+    public FingerprintDialog circleScanningColor(int circleScanningColor) {
         this.fingerprint.circleScanningColor(circleScanningColor);
         return this;
     }
@@ -160,7 +160,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param circleSuccessColor resource color
      * @return FingerprintDialog object
      */
-    public FingerprintDialog circleSuccessColor(int circleSuccessColor){
+    public FingerprintDialog circleSuccessColor(int circleSuccessColor) {
         this.fingerprint.circleSuccessColor(circleSuccessColor);
         return this;
     }
@@ -170,7 +170,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param circleErrorColor resource color
      * @return FingerprintDialog object
      */
-    public FingerprintDialog circleErrorColor(int circleErrorColor){
+    public FingerprintDialog circleErrorColor(int circleErrorColor) {
         this.fingerprint.circleErrorColor(circleErrorColor);
         return this;
     }
@@ -180,7 +180,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param statusScanningColor resource color
      * @return FingerprintDialog object
      */
-    public FingerprintDialog statusScanningColor(int statusScanningColor){
+    public FingerprintDialog statusScanningColor(int statusScanningColor) {
         this.statusScanningColor = statusScanningColor;
         return this;
     }
@@ -190,7 +190,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param statusSuccessColor resource color
      * @return FingerprintDialog object
      */
-    public FingerprintDialog statusSuccessColor(int statusSuccessColor){
+    public FingerprintDialog statusSuccessColor(int statusSuccessColor) {
         this.statusSuccessColor = statusSuccessColor;
         return this;
     }
@@ -200,7 +200,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param statusErrorColor resource color
      * @return FingerprintDialog object
      */
-    public FingerprintDialog statusErrorColor(int statusErrorColor){
+    public FingerprintDialog statusErrorColor(int statusErrorColor) {
         this.statusErrorColor = statusErrorColor;
         return this;
     }
@@ -210,7 +210,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param delayAfterError delay in milliseconds
      * @return FingerprintDialog object
      */
-    public FingerprintDialog delayAfterError(int delayAfterError){
+    public FingerprintDialog delayAfterError(int delayAfterError) {
         this.delayAfterError = delayAfterError;
         this.fingerprint.delayAfterError(delayAfterError);
         return this;
@@ -221,7 +221,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param delayAfterSuccess delay in milliseconds
      * @return FingerprintDialog object
      */
-    public FingerprintDialog delayAfterSuccess(int delayAfterSuccess){
+    public FingerprintDialog delayAfterSuccess(int delayAfterSuccess) {
         this.delayAfterSuccess = delayAfterSuccess;
         return this;
     }
@@ -232,7 +232,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param counterCallback callback to be triggered when limit is reached
      * @return FingerprintDialog object
      */
-    public FingerprintDialog tryLimit(int limit, FailAuthCounterCallback counterCallback){
+    public FingerprintDialog tryLimit(int limit, FailAuthCounterCallback counterCallback) {
         this.fingerprint.tryLimit(limit, counterCallback);
         return this;
     }
@@ -242,7 +242,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
      * @param onUsePassword OnClickListener triggered when button is clicked
      * @return FingerprintDialog object
      */
-    public FingerprintDialog usePasswordButton(View.OnClickListener onUsePassword){
+    public FingerprintDialog usePasswordButton(View.OnClickListener onUsePassword) {
         this.onUsePassword = onUsePassword;
         return this;
     }
@@ -250,15 +250,15 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
     /**
      * Show the dialog.
      */
-    public void show(){
-        if(title==null || message==null){
+    public void show() {
+        if(title==null || message==null) {
             throw new RuntimeException("Title or message cannot be null.");
         }
 
         showDialog();
     }
 
-    private void showDialog(){
+    private void showDialog() {
         dialogTitle.setText(title);
         dialogMessage.setText(message);
         cancelButton.setText(R.string.fingerprint_cancel);
@@ -272,20 +272,18 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
             @Override
             public void onClick(View view) {
                 fingerprint.cancel();
-                if(fingerprintDialogSecureCallback!=null){
+                if (fingerprintDialogSecureCallback != null) {
                     fingerprintDialogSecureCallback.onAuthenticationCancel();
-                }
-                else{
+                } else {
                     fingerprintDialogCallback.onAuthenticationCancel();
                 }
                 dialog.cancel();
             }
         });
 
-        if(onUsePassword==null){
+        if (onUsePassword==null) {
             usePasswordButton.setVisibility(View.GONE);
-        }
-        else{
+        } else {
             usePasswordButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -296,8 +294,8 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
             });
         }
 
-        if(dialog.getWindow() != null) {
-            if(enterAnimation!=DialogAnimation.Enter.APPEAR || exitAnimation!=DialogAnimation.Exit.DISAPPEAR) {
+        if (dialog.getWindow() != null) {
+            if (enterAnimation!=DialogAnimation.Enter.APPEAR || exitAnimation!=DialogAnimation.Exit.DISAPPEAR) {
                 int style = DialogAnimation.getStyle(enterAnimation, exitAnimation);
                 if (style != -1) {
                     dialog.getWindow().getAttributes().windowAnimations = style;
@@ -306,7 +304,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
                 }
             }
 
-            if(!dimBackground){
+            if (!dimBackground) {
                 dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
             }
         }
@@ -317,15 +315,15 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
         authenticate();
     }
 
-    private void authenticate(){
+    private void authenticate() {
         fingerprint.authenticate();
     }
 
-    private void setStatus(int textId, int textColorId){
+    private void setStatus(int textId, int textColorId) {
         setStatus(context.getResources().getString(textId), textColorId);
     }
 
-    private void setStatus(String text, int textColorId){
+    private void setStatus(String text, int textColorId) {
         dialogStatus.setTextColor(ResourcesCompat.getColor(context.getResources(), textColorId, context.getTheme()));
         dialogStatus.setText(text);
     }
@@ -346,7 +344,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
                 @Override
                 public void run() {
                     dialog.cancel();
-                    if(fingerprintDialogCallback!=null){
+                    if (fingerprintDialogCallback != null) {
                         fingerprintDialogCallback.onAuthenticationSucceeded();
                     }
                 }
@@ -375,7 +373,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
                 @Override
                 public void run() {
                     dialog.cancel();
-                    if(fingerprintDialogSecureCallback!=null){
+                    if (fingerprintDialogSecureCallback!=null) {
                         fingerprintDialogSecureCallback.onAuthenticationSucceeded();
                     }
                 }
@@ -391,7 +389,7 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
         @Override
         public void onNewFingerprintEnrolled(FingerprintToken token) {
             dialog.cancel();
-            if(fingerprintDialogSecureCallback!=null){
+            if (fingerprintDialogSecureCallback != null) {
                 fingerprintDialogSecureCallback.onNewFingerprintEnrolled(token);
             }
         }
