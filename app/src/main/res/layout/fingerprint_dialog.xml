@@ -70,16 +70,6 @@
             android:paddingEnd="8dp"
             android:layout_alignParentEnd="true"/>
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/fingerprint_dialog_use_password"
-            style="?attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:gravity="center_vertical"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:layout_toStartOf="@+id/fingerprint_dialog_cancel"
-            android:layout_marginEnd="8dp"/>
     </RelativeLayout>
 
 </LinearLayout>

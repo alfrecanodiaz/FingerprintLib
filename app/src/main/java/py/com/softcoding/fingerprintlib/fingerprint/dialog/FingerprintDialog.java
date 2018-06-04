@@ -26,13 +26,12 @@ import py.com.softcoding.fingerprintlib.fingerprint.view.Fingerprint;
 public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
     private Fingerprint fingerprint;
     private TextView dialogTitle, dialogMessage, dialogStatus;
-    private AppCompatButton cancelButton, usePasswordButton;
+    private AppCompatButton cancelButton;
 
     private FingerprintDialogCallback fingerprintDialogCallback;
     private FingerprintDialogSecureCallback fingerprintDialogSecureCallback;
 
     private int statusScanningColor, statusSuccessColor, statusErrorColor;
-    private View.OnClickListener onUsePassword;
     private Handler handler;
 
     private int delayAfterError, delayAfterSuccess;
@@ -46,7 +45,6 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
 
     private void init() {
         this.handler = new Handler();
-        this.onUsePassword = null;
         this.delayAfterError = Fingerprint.DEFAULT_DELAY_AFTER_ERROR;
         this.delayAfterSuccess = Fingerprint.DEFAULT_DELAY_AFTER_ERROR;
 
@@ -60,7 +58,6 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
         this.dialogMessage = dialogView.findViewById(R.id.fingerprint_dialog_message);
         this.dialogStatus = dialogView.findViewById(R.id.fingerprint_dialog_status);
         this.cancelButton = dialogView.findViewById(R.id.fingerprint_dialog_cancel);
-        this.usePasswordButton = dialogView.findViewById(R.id.fingerprint_dialog_use_password);
     }
 
     /**
@@ -238,16 +235,6 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
     }
 
     /**
-     * Display a "use password" button on the dialog.
-     * @param onUsePassword OnClickListener triggered when button is clicked
-     * @return FingerprintDialog object
-     */
-    public FingerprintDialog usePasswordButton(View.OnClickListener onUsePassword) {
-        this.onUsePassword = onUsePassword;
-        return this;
-    }
-
-    /**
      * Show the dialog.
      */
     public void show() {
@@ -262,7 +249,6 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
         dialogTitle.setText(title);
         dialogMessage.setText(message);
         cancelButton.setText(R.string.fingerprint_cancel);
-        usePasswordButton.setText(R.string.fingerprint_use_password);
         setStatus(R.string.fingerprint_state_scanning, statusScanningColor);
 
         builder.setView(dialogView);
@@ -281,21 +267,8 @@ public class FingerprintDialog extends AnimatedDialog<FingerprintDialog> {
             }
         });
 
-        if (onUsePassword==null) {
-            usePasswordButton.setVisibility(View.GONE);
-        } else {
-            usePasswordButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    fingerprint.cancel();
-                    dialog.cancel();
-                    onUsePassword.onClick(view);
-                }
-            });
-        }
-
         if (dialog.getWindow() != null) {
-            if (enterAnimation!=DialogAnimation.Enter.APPEAR || exitAnimation!=DialogAnimation.Exit.DISAPPEAR) {
+            if (enterAnimation != DialogAnimation.Enter.APPEAR || exitAnimation != DialogAnimation.Exit.DISAPPEAR) {
                 int style = DialogAnimation.getStyle(enterAnimation, exitAnimation);
                 if (style != -1) {
                     dialog.getWindow().getAttributes().windowAnimations = style;

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Fingerprint</string>
-    <string name="fingerprint_state_scanning">Sensor Touch</string>
+    <string name="fingerprint_state_scanning">Toque el sensor Touch</string>
     <string name="fingerprint_state_success">Huella dactilar reconocida</string>
     <string name="fingerprint_state_failure">Huella dactilar no reconocida.\nInténtalo de nuevo.</string>
     <string name="fingerprint_cancel">Cancelar</string>
