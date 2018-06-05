@@ -12,6 +12,16 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
+        <TextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:paddingBottom="8dp"
+            android:textColor="@android:color/darker_gray"
+            android:gravity="center_horizontal"
+            android:text="Fingerprint Status"/>
+
         <Button
             android:id="@+id/btnFingerprint"
             android:text="Fingerprint"

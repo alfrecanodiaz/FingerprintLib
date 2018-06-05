@@ -11,10 +11,9 @@ import android.widget.TextView;
 
 import py.com.softcoding.fingerprintlib.R;
 import py.com.softcoding.fingerprintlib.fingerprint.callback.FailAuthCounterCallback;
-import py.com.softcoding.fingerprintlib.fingerprint.callback.FingerprintCallback;
 import py.com.softcoding.fingerprintlib.fingerprint.callback.FingerprintDialogCallback;
-import py.com.softcoding.fingerprintlib.fingerprint.callback.FingerprintDialogSecureCallback;
-import py.com.softcoding.fingerprintlib.fingerprint.callback.FingerprintSecureCallback;
+import py.com.softcoding.fingerprintlib.fingerprint.callback.FingerprintCallback;
+import py.com.softcoding.fingerprintlib.fingerprint.facade.Fingerprint;
 import py.com.softcoding.fingerprintlib.fingerprint.utils.FingerprintToken;
 import py.com.softcoding.fingerprintlib.fingerprint.view.FingerprintView;
 
@@ -23,19 +22,18 @@ import py.com.softcoding.fingerprintlib.fingerprint.view.FingerprintView;
  */
 
 public class FingerprintPrompt extends FingerprintDialog<FingerprintPrompt> {
+    private final static String TAG = "FingerprintPrompt";
+
     private FingerprintView fingerprintView;
     private TextView dialogTitle, dialogMessage, dialogStatus;
     private AppCompatButton cancelButton;
 
     private FingerprintDialogCallback fingerprintDialogCallback;
-    private FingerprintDialogSecureCallback fingerprintDialogSecureCallback;
 
     private int statusScanningColor, statusSuccessColor, statusErrorColor;
     private Handler handler;
 
     private int delayAfterError, delayAfterSuccess;
-
-    private final static String TAG = "FingerprintPrompt";
 
     private FingerprintPrompt(Context context) {
         super(context);
@@ -44,8 +42,8 @@ public class FingerprintPrompt extends FingerprintDialog<FingerprintPrompt> {
 
     private void init() {
         this.handler = new Handler();
-        this.delayAfterError = FingerprintView.DEFAULT_DELAY_AFTER_ERROR;
-        this.delayAfterSuccess = FingerprintView.DEFAULT_DELAY_AFTER_ERROR;
+        this.delayAfterError = Fingerprint.DefaultConfiguration.DELAY_AFTER_ERROR;
+        this.delayAfterSuccess = Fingerprint.DefaultConfiguration.DELAY_AFTER_ERROR;
 
         this.statusScanningColor = R.color.status_scanning;
         this.statusSuccessColor = R.color.status_success;
@@ -79,146 +77,14 @@ public class FingerprintPrompt extends FingerprintDialog<FingerprintPrompt> {
     }
 
     /**
-     * Set an authentication callback.
-     * @param fingerprintDialogCallback The callback
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt callback(FingerprintDialogCallback fingerprintDialogCallback) {
-        this.fingerprintDialogCallback = fingerprintDialogCallback;
-        this.fingerprintView.callback(fingerprintCallback);
-        return this;
-    }
-
-    /**
      * Set a callback for secured authentication.
-     * @param fingerprintDialogSecureCallback The callback
+     * @param fingerprintDialogCallback The callback
      * @param KEY_NAME An arbitrary string used to create a cipher pair in the Android KeyStore
      * @return FingerprintPrompt object
      */
-    public FingerprintPrompt callback(FingerprintDialogSecureCallback fingerprintDialogSecureCallback, String KEY_NAME) {
-        this.fingerprintDialogSecureCallback = fingerprintDialogSecureCallback;
-        this.fingerprintView.callback(fingerprintSecureCallback, KEY_NAME);
-        return this;
-    }
-
-    /**
-     * Perform a secured authentication using that particular CryptoObject.
-     * @param cryptoObject CryptoObject to use
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt cryptoObject(FingerprintManager.CryptoObject cryptoObject) {
-        this.fingerprintView.cryptoObject(cryptoObject);
-        return this;
-    }
-
-    /**
-     * Set color of the fingerprint scanning status.
-     * @param fingerprintScanningColor resource color
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt fingerprintScanningColor(int fingerprintScanningColor) {
-        this.fingerprintView.fingerprintScanningColor(fingerprintScanningColor);
-        return this;
-    }
-
-    /**
-     * Set color of the fingerprint success status.
-     * @param fingerprintSuccessColor resource color
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt fingerprintSuccessColor(int fingerprintSuccessColor) {
-        this.fingerprintView.fingerprintSuccessColor(fingerprintSuccessColor);
-        return this;
-    }
-
-    /**
-     * Set color of the fingerprint error status.
-     * @param fingerprintErrorColor resource color
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt fingerprintErrorColor(int fingerprintErrorColor) {
-        this.fingerprintView.fingerprintErrorColor(fingerprintErrorColor);
-        return this;
-    }
-
-    /**
-     * Set color of the circle scanning status.
-     * @param circleScanningColor resource color
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt circleScanningColor(int circleScanningColor) {
-        this.fingerprintView.circleScanningColor(circleScanningColor);
-        return this;
-    }
-
-    /**
-     * Set color of the circle success status.
-     * @param circleSuccessColor resource color
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt circleSuccessColor(int circleSuccessColor) {
-        this.fingerprintView.circleSuccessColor(circleSuccessColor);
-        return this;
-    }
-
-    /**
-     * Set color of the circle error status.
-     * @param circleErrorColor resource color
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt circleErrorColor(int circleErrorColor) {
-        this.fingerprintView.circleErrorColor(circleErrorColor);
-        return this;
-    }
-
-    /**
-     * Set color of the text scanning status.
-     * @param statusScanningColor resource color
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt statusScanningColor(int statusScanningColor) {
-        this.statusScanningColor = statusScanningColor;
-        return this;
-    }
-
-    /**
-     * Set color of the text success status.
-     * @param statusSuccessColor resource color
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt statusSuccessColor(int statusSuccessColor) {
-        this.statusSuccessColor = statusSuccessColor;
-        return this;
-    }
-
-    /**
-     * Set color of the text error status.
-     * @param statusErrorColor resource color
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt statusErrorColor(int statusErrorColor) {
-        this.statusErrorColor = statusErrorColor;
-        return this;
-    }
-
-    /**
-     * Set delay before triggering callback after a failed attempt to authenticate.
-     * @param delayAfterError delay in milliseconds
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt delayAfterError(int delayAfterError) {
-        this.delayAfterError = delayAfterError;
-        this.fingerprintView.delayAfterError(delayAfterError);
-        return this;
-    }
-
-    /**
-     * Set delay before triggering callback after a successful authentication.
-     * @param delayAfterSuccess delay in milliseconds
-     * @return FingerprintPrompt object
-     */
-    public FingerprintPrompt delayAfterSuccess(int delayAfterSuccess) {
-        this.delayAfterSuccess = delayAfterSuccess;
+    public FingerprintPrompt callback(FingerprintDialogCallback fingerprintDialogCallback, String KEY_NAME) {
+        this.fingerprintDialogCallback = fingerprintDialogCallback;
+        this.fingerprintView.callback(fingerprintCallback, KEY_NAME);
         return this;
     }
 
@@ -237,8 +103,12 @@ public class FingerprintPrompt extends FingerprintDialog<FingerprintPrompt> {
      * Show the dialog.
      */
     public void show() {
-        if(title==null || message==null) {
+        if (title == null || message == null) {
             throw new RuntimeException("Title or message cannot be null.");
+        }
+
+        if (fingerprintCallback == null) {
+            throw new RuntimeException("You must specify a callback.");
         }
 
         showDialog();
@@ -257,9 +127,7 @@ public class FingerprintPrompt extends FingerprintDialog<FingerprintPrompt> {
             @Override
             public void onClick(View view) {
                 fingerprintView.cancel();
-                if (fingerprintDialogSecureCallback != null) {
-                    fingerprintDialogSecureCallback.onAuthenticationCancel();
-                } else {
+                if (fingerprintDialogCallback != null) {
                     fingerprintDialogCallback.onAuthenticationCancel();
                 }
                 dialog.cancel();
@@ -319,39 +187,10 @@ public class FingerprintPrompt extends FingerprintDialog<FingerprintPrompt> {
         }
 
         @Override
-        public void onAuthenticationError(int errorCode, String error) {
-            setStatus(error, statusErrorColor);
-            handler.postDelayed(returnToScanning, delayAfterError);
-        }
-    };
-
-    private FingerprintSecureCallback fingerprintSecureCallback = new FingerprintSecureCallback() {
-        @Override
-        public void onAuthenticationSucceeded() {
-            handler.removeCallbacks(returnToScanning);
-            setStatus(R.string.fingerprint_state_success, statusSuccessColor);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    dialog.cancel();
-                    if (fingerprintDialogSecureCallback!=null) {
-                        fingerprintDialogSecureCallback.onAuthenticationSucceeded();
-                    }
-                }
-            }, delayAfterSuccess);
-        }
-
-        @Override
-        public void onAuthenticationFailed() {
-            setStatus(R.string.fingerprint_state_failure, statusErrorColor);
-            handler.postDelayed(returnToScanning, delayAfterError);
-        }
-
-        @Override
         public void onNewFingerprintEnrolled(FingerprintToken token) {
             dialog.cancel();
-            if (fingerprintDialogSecureCallback != null) {
-                fingerprintDialogSecureCallback.onNewFingerprintEnrolled(token);
+            if (fingerprintDialogCallback != null) {
+                fingerprintDialogCallback.onNewFingerprintEnrolled(token);
             }
         }
 

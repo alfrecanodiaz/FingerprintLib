@@ -4,7 +4,9 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
+import android.util.Base64;
 
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
@@ -13,7 +15,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableKeyException;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
@@ -108,6 +112,7 @@ public class CipherHelper {
     private boolean initEncryptionCipher() {
         try {
             cipher.init(Cipher.ENCRYPT_MODE, cipherKey);
+            setIvParameterSpec(cipher.getIV());
             return true;
         } catch (KeyPermanentlyInvalidatedException e) {
             return false;
@@ -116,9 +121,9 @@ public class CipherHelper {
         }
     }
 
-    private boolean initDecryptionCipher(byte[] ivBytes) {
+    private boolean initDecryptionCipher() {
         try {
-            cipher.init(Cipher.DECRYPT_MODE, cipherKey, new IvParameterSpec(ivBytes));
+            cipher.init(Cipher.DECRYPT_MODE, cipherKey, new IvParameterSpec(getIvParameterSpec()));
             return true;
         } catch (KeyPermanentlyInvalidatedException e) {
             return false;
@@ -144,7 +149,7 @@ public class CipherHelper {
         return initEncryptionCipher() ? new FingerprintManager.CryptoObject(cipher) : null;
     }
 
-    public FingerprintManager.CryptoObject getDecryptionCryptoObject(byte[] ivBytes) {
+    public FingerprintManager.CryptoObject getDecryptionCryptoObject() {
         loadKeyStore();
         if (!hasKey()) {
             generateNewKey();
@@ -152,6 +157,33 @@ public class CipherHelper {
 
         createCipher();
 
-        return initDecryptionCipher(ivBytes) ? new FingerprintManager.CryptoObject(cipher) : null;
+        return initDecryptionCipher() ? new FingerprintManager.CryptoObject(cipher) : null;
+    }
+
+    private void setIvParameterSpec(byte[] iv) {
+        // logic
+        // SharedPreferences
+    }
+
+    private byte[] getIvParameterSpec() {
+        // logic
+        return new byte[0];
+    }
+
+    String encrypt(String value) {
+        try {
+            byte[] encrypted = getEncryptionCryptoObject().getCipher().doFinal(value.getBytes("UTF-8"));
+            return Base64.encodeToString(encrypted, Base64.DEFAULT);
+        } catch (BadPaddingException | IllegalBlockSizeException | UnsupportedEncodingException e) {
+            throw new RuntimeException("Failed to encrypt the data with the generated key.", e);
+        }
+    }
+    String decrypt(String value) {
+        try {
+            byte[] decodedValue = getDecryptionCryptoObject().getCipher().doFinal(Base64.decode(value, Base64.DEFAULT));
+            return new String(decodedValue, "UTF-8");
+        } catch (BadPaddingException | IllegalBlockSizeException | UnsupportedEncodingException e) {
+            throw new RuntimeException("Failed to decrypt the data with the generated key.", e);
+        }
     }
 }

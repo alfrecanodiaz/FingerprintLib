@@ -8,20 +8,29 @@ import android.hardware.fingerprint.FingerprintManager;
  */
 
 public class FingerprintAlert extends FingerprintDialog<FingerprintAlert> {
+    private final static String TAG = "FingerprintAlert";
+
     private String info;
     private String action;
 
     private OnClickActionListener onClickActionListener;
 
-    private final static String TAG = "FingerprintAlert";
-
     private FingerprintAlert(Context context) {
         super(context);
+        this.info = "";
+        this.action = "";
+        this.onClickActionListener = null;
         init();
     }
 
     private void init() {
+        if (info.isEmpty()) {
 
+        }
+
+        if (action.isEmpty()) {
+
+        }
     }
 
     /**
@@ -35,9 +44,9 @@ public class FingerprintAlert extends FingerprintDialog<FingerprintAlert> {
     }
 
     /**
-     * Create a FingerprintPrompt instance.
+     * Create a FingerprintAlert instance.
      * @param context Activity Context
-     * @return FingerprintPrompt instance
+     * @return FingerprintAlert instance
      */
     public static FingerprintAlert initialize(Context context) {
         return new FingerprintAlert(context);
@@ -50,6 +59,17 @@ public class FingerprintAlert extends FingerprintDialog<FingerprintAlert> {
 
     public FingerprintAlert action(String action, OnClickActionListener onClickActionListener) {
         this.action = action;
+        this.onClickActionListener = onClickActionListener;
+        return this;
+    }
+
+    public FingerprintAlert info(int resInfo) {
+        this.info = context.getResources().getString(resInfo);
+        return this;
+    }
+
+    public FingerprintAlert action(int resAction, OnClickActionListener onClickActionListener) {
+        this.action = context.getResources().getString(resAction);
         this.onClickActionListener = onClickActionListener;
         return this;
     }

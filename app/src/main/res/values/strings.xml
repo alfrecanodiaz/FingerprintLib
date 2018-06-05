@@ -10,6 +10,4 @@
     <string name="password_confirm">Confirmar</string>
     <string name="password_cancel">Cancelar</string>
     <string name="password_incorrect">PIN incorrecto</string>
-
-    <string name="fingerprint_key">ITAU_FINGERPRINT_KEY</string>
 </resources>
