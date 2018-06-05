@@ -28,7 +28,7 @@ import py.com.softcoding.fingerprintlib.fingerprint.utils.FingerprintToken;
  * Created by Alfredo Cano on 03/06/18.
  */
 
-public class Fingerprint extends RelativeLayout {
+public class FingerprintView extends RelativeLayout {
     private final static String TAG = "FingerprintView";
 
     private View fingerprintImageView;
@@ -55,23 +55,23 @@ public class Fingerprint extends RelativeLayout {
     public final static int DEFAULT_FINGERPRINT_SIZE = 30;
     public final static float SCALE = (float) DEFAULT_FINGERPRINT_SIZE/DEFAULT_CIRCLE_SIZE;
 
-    public Fingerprint(Context context) {
+    public FingerprintView(Context context) {
         super(context);
     }
 
-    public Fingerprint(Context context, @Nullable AttributeSet attrs) {
+    public FingerprintView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         initAttributes(context, attrs, 0, 0);
         initView(context);
     }
 
-    public Fingerprint(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public FingerprintView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttributes(context, attrs, defStyleAttr, 0);
         initView(context);
     }
 
-    public Fingerprint(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public FingerprintView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initAttributes(context, attrs, defStyleAttr, defStyleRes);
         initView(context);
@@ -160,9 +160,9 @@ public class Fingerprint extends RelativeLayout {
     /**
      * Set fingerprint callback.
      * @param fingerprintCallback callback
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint callback(FingerprintCallback fingerprintCallback) {
+    public FingerprintView callback(FingerprintCallback fingerprintCallback) {
         this.fingerprintCallback = fingerprintCallback;
         return this;
     }
@@ -171,9 +171,9 @@ public class Fingerprint extends RelativeLayout {
      * Set fingerprint secure callback.
      * @param fingerprintSecureCallback secure callback
      * @param KEY_NAME key that will be used for the cipher
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint callback(FingerprintSecureCallback fingerprintSecureCallback, String KEY_NAME) {
+    public FingerprintView callback(FingerprintSecureCallback fingerprintSecureCallback, String KEY_NAME) {
         this.fingerprintSecureCallback = fingerprintSecureCallback;
         this.cipherHelper = new CipherHelper(KEY_NAME);
         return this;
@@ -182,9 +182,9 @@ public class Fingerprint extends RelativeLayout {
     /**
      * Set a CryptoObject which is going to be unlocked by the fingerprint.
      * @param cryptoObject CryptoObject to be unlocked
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint cryptoObject(FingerprintManager.CryptoObject cryptoObject) {
+    public FingerprintView cryptoObject(FingerprintManager.CryptoObject cryptoObject) {
         this.cryptoObject = cryptoObject;
         return this;
     }
@@ -192,9 +192,9 @@ public class Fingerprint extends RelativeLayout {
     /**
      * Set the fingerprint icon color in scanning state.
      * @param fingerprintScanning color id
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint fingerprintScanningColor(int fingerprintScanning) {
+    public FingerprintView fingerprintScanningColor(int fingerprintScanning) {
         this.fingerprintScanning = fingerprintScanning;
         this.fingerprintImageView.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(fingerprintScanning)));
         return this;
@@ -203,9 +203,9 @@ public class Fingerprint extends RelativeLayout {
     /**
      * Set the fingerprint icon color in success state.
      * @param fingerprintSuccess color id
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint fingerprintSuccessColor(int fingerprintSuccess) {
+    public FingerprintView fingerprintSuccessColor(int fingerprintSuccess) {
         this.fingerprintSuccess = fingerprintSuccess;
         this.fingerprintImageView.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(fingerprintSuccess)));
         return this;
@@ -214,9 +214,9 @@ public class Fingerprint extends RelativeLayout {
     /**
      * Set the fingerprint icon color in error state.
      * @param fingerprintError color id
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint fingerprintErrorColor(int fingerprintError) {
+    public FingerprintView fingerprintErrorColor(int fingerprintError) {
         this.fingerprintError = fingerprintError;
         this.fingerprintImageView.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(fingerprintError)));
         return this;
@@ -225,9 +225,9 @@ public class Fingerprint extends RelativeLayout {
     /**
      * Set the fingerprint circular background color in scanning state.
      * @param circleScanning color id
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint circleScanningColor(int circleScanning) {
+    public FingerprintView circleScanningColor(int circleScanning) {
         this.circleScanning = circleScanning;
         this.circleView.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(circleScanning)));
         return this;
@@ -236,9 +236,9 @@ public class Fingerprint extends RelativeLayout {
     /**
      * Set the fingerprint circular background color in success state.
      * @param circleSuccess color id
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint circleSuccessColor(int circleSuccess) {
+    public FingerprintView circleSuccessColor(int circleSuccess) {
         this.circleSuccess = circleSuccess;
         this.circleView.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(circleSuccess)));
         return this;
@@ -247,9 +247,9 @@ public class Fingerprint extends RelativeLayout {
     /**
      * Set the fingerprint circular background color in error state.
      * @param circleError color id
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint circleErrorColor(int circleError) {
+    public FingerprintView circleErrorColor(int circleError) {
         this.circleError = circleError;
         this.circleView.setBackgroundTintList(ColorStateList.valueOf(getContext().getColor(circleError)));
         return this;
@@ -259,9 +259,9 @@ public class Fingerprint extends RelativeLayout {
      * Set a failing authentication limit. Android will block automatically the fingerprint scanner when 5 attempts will have failed.
      * @param limit the number of fails accepted
      * @param counterCallback a callback triggered when limit is reached
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint tryLimit(int limit, FailAuthCounterCallback counterCallback) {
+    public FingerprintView tryLimit(int limit, FailAuthCounterCallback counterCallback) {
         this.limit = limit;
         this.counterCallback = counterCallback;
         return this;
@@ -270,9 +270,9 @@ public class Fingerprint extends RelativeLayout {
     /**
      * Set delay before scanning again after a failed authentication.
      * @param delayAfterError the delay in milliseconds
-     * @return the Fingerprint object itself
+     * @return the FingerprintView object itself
      */
-    public Fingerprint delayAfterError(int delayAfterError) {
+    public FingerprintView delayAfterError(int delayAfterError) {
         this.delayAfterError = delayAfterError;
         return this;
     }
@@ -284,7 +284,7 @@ public class Fingerprint extends RelativeLayout {
      */
     public static boolean isAvailable(Context context) {
         FingerprintManager fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
-        if(fingerprintManager!=null){
+        if (fingerprintManager != null) {
             return (fingerprintManager.isHardwareDetected() && fingerprintManager.hasEnrolledFingerprints());
         }
         return false;

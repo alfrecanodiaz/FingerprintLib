@@ -43,7 +43,7 @@ public class CipherHelper {
         this.cipherCreated = false;
     }
 
-    private void loadKeyStore(){
+    private void loadKeyStore() {
         if (keyStoreLoaded) {
             return;
         }
@@ -51,7 +51,7 @@ public class CipherHelper {
         reloadKeyStore();
     }
 
-    private void reloadKeyStore(){
+    private void reloadKeyStore() {
         try {
             keyStore = KeyStore.getInstance(provider);
             keyStore.load(null);
@@ -88,7 +88,7 @@ public class CipherHelper {
         }
     }
 
-    private void createCipher(){
+    private void createCipher() {
         if (cipherCreated) {
             return;
         }
@@ -135,29 +135,23 @@ public class CipherHelper {
 
     public FingerprintManager.CryptoObject getEncryptionCryptoObject() {
         loadKeyStore();
-        if(!hasKey()){
+        if (!hasKey()) {
             generateNewKey();
         }
 
         createCipher();
-        if (initEncryptionCipher()) {
-            return new FingerprintManager.CryptoObject(cipher);
-        } else {
-            return null;
-        }
+
+        return initEncryptionCipher() ? new FingerprintManager.CryptoObject(cipher) : null;
     }
 
     public FingerprintManager.CryptoObject getDecryptionCryptoObject(byte[] ivBytes) {
         loadKeyStore();
-        if(!hasKey()){
+        if (!hasKey()) {
             generateNewKey();
         }
 
         createCipher();
-        if (initDecryptionCipher(ivBytes)) {
-            return new FingerprintManager.CryptoObject(cipher);
-        } else {
-            return null;
-        }
+
+        return initDecryptionCipher(ivBytes) ? new FingerprintManager.CryptoObject(cipher) : null;
     }
 }

@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <py.com.softcoding.fingerprintlib.fingerprint.view.Fingerprint
+            <py.com.softcoding.fingerprintlib.fingerprint.view.FingerprintView
                 android:id="@+id/fingerprint_dialog_fp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
