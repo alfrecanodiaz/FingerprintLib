@@ -1,7 +1,8 @@
 package py.com.softcoding.fingerprintlib.fingerprint.dialog;
 
 import android.content.Context;
-import android.hardware.fingerprint.FingerprintManager;
+
+import py.com.softcoding.fingerprintlib.fingerprint.facade.Fingerprint;
 
 /**
  * Created by Alfredo Cano on 05/06/18.
@@ -39,8 +40,7 @@ public class FingerprintAlert extends FingerprintDialog<FingerprintAlert> {
      * @return True if authentication is available, False otherwise
      */
     public static boolean isAvailable(Context context) {
-        FingerprintManager manager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
-        return (manager != null && manager.isHardwareDetected() && manager.hasEnrolledFingerprints());
+        return Fingerprint.isAvailable(context);
     }
 
     /**

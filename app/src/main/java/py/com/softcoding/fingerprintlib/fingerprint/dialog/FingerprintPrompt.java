@@ -1,7 +1,6 @@
 package py.com.softcoding.fingerprintlib.fingerprint.dialog;
 
 import android.content.Context;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Handler;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.AppCompatButton;
@@ -63,8 +62,7 @@ public class FingerprintPrompt extends FingerprintDialog<FingerprintPrompt> {
      * @return True if authentication is available, False otherwise
      */
     public static boolean isAvailable(Context context) {
-        FingerprintManager manager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
-        return (manager != null && manager.isHardwareDetected() && manager.hasEnrolledFingerprints());
+        return Fingerprint.isAvailable(context);
     }
 
     /**

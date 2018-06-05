@@ -2,6 +2,7 @@ package py.com.softcoding.fingerprintlib.fingerprint.facade;
 
 import android.content.Context;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 
 /**
  * Created by Alfredo Cano on 04/06/18.
@@ -20,8 +21,12 @@ public class Fingerprint {
      * @return True if authentication is available, False otherwise
      */
     public static boolean isAvailable(Context context) {
-        FingerprintManager manager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
-        return (manager != null && manager.isHardwareDetected() && manager.hasEnrolledFingerprints());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            FingerprintManager manager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
+            return (manager != null && manager.isHardwareDetected() && manager.hasEnrolledFingerprints());
+        }
+
+        return false;
     }
 
     /**

@@ -184,8 +184,7 @@ public class FingerprintView extends RelativeLayout {
      * @return a boolean value
      */
     public static boolean isAvailable(Context context) {
-        FingerprintManager fingerprintManager = (FingerprintManager) context.getSystemService(Context.FINGERPRINT_SERVICE);
-        return (fingerprintManager != null && fingerprintManager.isHardwareDetected() && fingerprintManager.hasEnrolledFingerprints());
+        return Fingerprint.isAvailable(context);
     }
 
     /**
